@@ -20,35 +20,33 @@
     </style>
 </head>
 <body>
-    <h1>Productos</h1>
-    <table id="productosTable">
+    <h1>Proveedores</h1>
+    <table id="proveedoresTable">
         <thead>
             <tr>
-                <th>ProductoID</th>
+                <th>ID</th>
                 <th>Nombre</th>
-                <th>CategoriaID</th>
-                <th>ProveedorID</th>
-                <th>Precio</th>
+                <th>Contacto</th>
+                
             </tr>
         </thead>
         <tbody>
-            <!-- Las filas de productos se generarán aquí -->
         </tbody>
     </table>
 
     <script>
-        async function fetchProductos() {
+        async function fetchProveedores() {
             try {
-                const response = await fetch('http://localhost:3030/productos');
-                const productos = await response.json();
+                const response = await fetch('http://localhost:3030/proveedor');
+                const proveedores = await response.json();
 
-                const tableBody = document.querySelector('#productosTable tbody');
+                const tableBody = document.querySelector('#proveedoresTable tbody');
                 tableBody.innerHTML = '';
 
-                productos.forEach(producto => {
+                proveedores.forEach(proveedor => {
                     const row = document.createElement('tr');
                     
-                    Object.values(producto).forEach(value => {
+                    Object.values(proveedor).forEach(value => {
                         const cell = document.createElement('td');
                         cell.textContent = value;
                         row.appendChild(cell);
@@ -57,11 +55,11 @@
                     tableBody.appendChild(row);
                 });
             } catch (error) {
-                console.error('Ocurrio un error con los productos:', error);
+                console.error('Ocurrio un error con los proveedores:', error);
             }
         }
 
-        document.addEventListener('DOMContentLoaded', fetchProductos);
+        document.addEventListener('DOMContentLoaded', fetchProveedores);
     </script>
 </body>
 </html>
