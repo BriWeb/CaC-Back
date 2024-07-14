@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Productos</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Proveedores</h1>
+    <table id="proveedoresTable">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Contacto</th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Las filas de productos se generarán aquí -->
+        </tbody>
+    </table>
+
+    <script>
+        async function fetchProveedores() {
+            try {
+                const response = await fetch('http://localhost:3030/proveedor');
+                const proveedores = await response.json();
+
+                const tableBody = document.querySelector('#proveedoresTable tbody');
+                tableBody.innerHTML = '';
+
+                proveedores.forEach(proveedor => {
+                    const row = document.createElement('tr');
+                    
+                    Object.values(proveedor).forEach(value => {
+                        const cell = document.createElement('td');
+                        cell.textContent = value;
+                        row.appendChild(cell);
+                    });
+                    
+                    tableBody.appendChild(row);
+                });
+            } catch (error) {
+                console.error('Ocurrio un error con los proveedores:', error);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', fetchProveedores);
+    </script>
+</body>
+</html>

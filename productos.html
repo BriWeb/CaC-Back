@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Productos</title>
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Productos</h1>
+    <table id="productosTable">
+        <thead>
+            <tr>
+                <th>ProductoID</th>
+                <th>Nombre</th>
+                <th>CategoriaID</th>
+                <th>ProveedorID</th>
+                <th>Precio</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Las filas de productos se generarán aquí -->
+        </tbody>
+    </table>
+
+    <script>
+        async function fetchProductos() {
+            try {
+                const response = await fetch('http://localhost:3030/productos');
+                const productos = await response.json();
+
+                const tableBody = document.querySelector('#productosTable tbody');
+                tableBody.innerHTML = '';
+
+                productos.forEach(producto => {
+                    const row = document.createElement('tr');
+                    
+                    Object.values(producto).forEach(value => {
+                        const cell = document.createElement('td');
+                        cell.textContent = value;
+                        row.appendChild(cell);
+                    });
+                    
+                    tableBody.appendChild(row);
+                });
+            } catch (error) {
+                console.error('Ocurrio un error con los productos:', error);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', fetchProductos);
+    </script>
+</body>
+</html>
